@@ -6,20 +6,31 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.websocket.OnClose;
 import org.apache.el.parser.Token;
+import org.example.springsecurity.Repositories.UserRepository;
+import org.example.springsecurity.models.Users;
 import org.jspecify.annotations.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
 @Service
 public class JWTService implements CommandLineRunner {
+
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Value("${jwt.secret}")
     public String JWT_SECRET ;
@@ -107,11 +118,8 @@ public class JWTService implements CommandLineRunner {
 //        Object role = payload1.get("Role");
 //        System.out.println("Username: "+username +" Email: "+email+" Role: "+role);
 
-        boolean ans=isTokeExpired(token);
-        System.out.println("isTokeExpired: "+ans);
 
-        Object email=getClaimFromToken(token,Claims::get("email"));
-        System.out.println("getClaimFromToken: "+email);
+
 
     }
 }

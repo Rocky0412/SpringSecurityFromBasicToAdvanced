@@ -16,8 +16,5 @@ public class Hashing implements CommandLineRunner {
         String encodedPassword = encoder.encode(password);
         System.out.println("Bcrypt: " + encodedPassword);
     }
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
 }
